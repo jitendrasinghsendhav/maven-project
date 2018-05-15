@@ -1,8 +1,3 @@
-
-
-/**
- * This is a class.
- */
 public final class Greeter {
 
   /**
