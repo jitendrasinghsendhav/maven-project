@@ -1,4 +1,4 @@
-public final  Greeter {
+public   Greeter {
 
   /**
    * This is a constructor.
