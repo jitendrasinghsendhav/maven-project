@@ -1,4 +1,4 @@
-public final class Greeter {
+public final  Greeter {
 
   /**
    * This is a constructor.
@@ -7,7 +7,7 @@ public final class Greeter {
 
   }
   //TODO: Add javadoc comment
-  public final String greet(String someone) {
+  public  String greet(String someone) {
     return String.format("Hello, %s!", someone);
   }
 }
