@@ -1,4 +1,4 @@
-Hello, jitu
-deplyoment pipline is working 
-This is nothign just a start, check style
+Hi jitu
+deplyoment pipline is working.
+now you can deploy the mvn code  to docker dirctly 
 
