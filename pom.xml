@@ -3,7 +3,16 @@
 
  
          <modelVersion>4.0.0</modelVersion>
-
+  <repository>
+  <id>imposiblej0969</id>
+  <url>https://pkgs.dev.azure.com/imposiblej0969/_packaging/imposiblej0969/maven/v1</url>
+  <releases>
+    <enabled>true</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
   <groupId>com.example.maven-project</groupId>
   <artifactId>maven-project</artifactId>
   <packaging>pom</packaging>
