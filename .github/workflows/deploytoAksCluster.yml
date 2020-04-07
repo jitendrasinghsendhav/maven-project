@@ -1,0 +1,50 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: jitu124.azurecr.io
+        username: ${{ secrets.acr_jitu124_username }}
+        password: ${{ secrets.acr_jitu124_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t jitu124.azurecr.io/jitu:${{ github.sha }}
+        docker push jitu124.azurecr.io/jitu:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_jitu_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep jitu3321 | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace jitu3321`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: jitu3321
+        container-registry-url: jitu124.azurecr.io
+        container-registry-username: ${{ secrets.acr_jitu124_username }}
+        container-registry-password: ${{ secrets.acr_jitu124_password }}
+        secret-name: jitudockerauth
+       
+    - uses: azure/k8s-deploy@v1
+      with:
+        namespace: jitu3321
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          jitu124.azurecr.io/jitu:${{ github.sha }}
+        imagepullsecrets: |
+          jitudockerauth
