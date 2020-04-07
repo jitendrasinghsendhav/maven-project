@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "jitu"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "jitu"
+    spec:
+      containers:
+        - name: "jitu"
+          image: "jitu124.azurecr.io/jitu"
+          ports:
+          - containerPort: 8080
